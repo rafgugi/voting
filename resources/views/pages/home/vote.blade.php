@@ -9,7 +9,7 @@
       {{ csrf_field() }}
       @foreach($question->options as $option)
       <label>
-        <input type="radio" name="vote" value="{{$option->id}}" checked=""> {{ $option->option }}
+        <input type="radio" name="vote" value="{{$option->id}}"> {{ $option->option }}
       </label>
       <br>
       @endforeach
