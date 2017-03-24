@@ -12,22 +12,38 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        $admin = new Role();
-        $admin->name         = 'admin';
-        $admin->display_name = 'Administrator'; // optional
-        $admin->description  = 'User is allowed to manage and edit any resources'; // optional
-        $admin->save();
-
+        /* Bikin roles */
         $student = new Role();
         $student->name         = 'student';
-        $student->display_name = 'Mahasiswa'; // optional
-        $student->description  = 'User is only allowed to vote'; // optional
+        $student->display_name = 'Mahasiswa';
+        $student->description  = 'User is only allowed to vote';
         $student->save();
 
         $lecturer = new Role();
         $lecturer->name         = 'lecturer';
-        $lecturer->display_name = 'Dosen'; // optional
-        $lecturer->description  = 'User is allowed to manage question'; // optional
+        $lecturer->display_name = 'Dosen';
+        $lecturer->description  = 'User is allowed to manage question';
         $lecturer->save();
+
+        /* Bikin permission */
+        $voting = new Permission();
+        $voting->name         = 'vote';
+        $voting->display_name = 'Voting';
+        $voting->save();
+
+        $manage = new Permission();
+        $manage->name         = 'manage';
+        $manage->display_name = 'Manage questions';
+        $manage->save();
+
+        /* Attach role-permission */
+        $student->attachPermission($voting);
+        $lecturer->attachPermission($manage);
+
+        /* Attach user-role */
+        $dsn = User::where('email', 'dosen@gmail.com')->first();
+        $dsn->attachRole($lecturer);
+        $mhs = User::where('email', 'mahasiswa@gmail.com')->first();
+        $mhs->attachRole($student);
     }
 }
