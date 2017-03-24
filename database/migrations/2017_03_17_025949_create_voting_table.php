@@ -28,8 +28,8 @@ class CreateVotingTable extends Migration
 
     public function down()
     {
-        Schema::drop('questions');
         Schema::drop('options');
+        Schema::drop('questions');
     }
 
 }
