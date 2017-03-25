@@ -6,6 +6,7 @@ use Request;
 
 use App\Questions;
 use App\Options;
+use App\AccessLog;
 use Illuminate\Support\Facades\Input;
 
 class HomeController extends Controller
@@ -44,5 +45,11 @@ class HomeController extends Controller
         }
         $this->data['question'] = $question;
         return view('pages.home.result',$this->data);
+    }
+
+    public function log()
+    {
+        $count = AccessLog::where('path', Request::path())->count();
+        return "Halaman ini telah diakses sebanyak $count kali";
     }
 }
